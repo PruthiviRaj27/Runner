@@ -18,5 +18,5 @@ jobs:
 
       - name: Compile and run Kotlin file
         run: |
-          kotlinc Main.kt -include-runtime -d Main.jar
+          kotlinc -include-runtime -d Main.jar
           java -jar Main.jar
