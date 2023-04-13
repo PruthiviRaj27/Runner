@@ -6,7 +6,6 @@ private val date get() = Calendar.getInstance().time.toString()
 fun main() {
     println("Hello World!")
     println("Start $date")
-    val duration = 5.minutes
-    Thread.sleep(duration.inWholeMilliseconds)
+    Thread.sleep(5000)
     println("End $date")
 }
