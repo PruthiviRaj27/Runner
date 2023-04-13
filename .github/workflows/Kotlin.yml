@@ -8,22 +8,17 @@ jobs:
 
     strategy:
       matrix:
-        app:
-          - [1,2,3,4,5,6,7,8,9]
-          - 10
-          - 11
-          - 12
-          - 13
-          - 14
-          - 15
-          - 16
-          - 17
-          - 18
-          - 19
-          - 20
-          - 21
+        app: ${{ fromJson(steps.setup_apps.outputs.app_matrix) }}
+
 
     steps:
+      - name: Setup app matrix
+        id: setup_apps
+        run: |
+          apps=$(cat count.txt)
+          app_matrix=$(echo "$apps" | sed 's/.*/\1\n&/;s/^/\n/;s/$/\n/')
+          echo "::set-output name=app_matrix::$(echo "$app_matrix" | jq -R -s 'split("\n")[:-1]')"
+
       - name: Checkout code
         uses: actions/checkout@v2
 
