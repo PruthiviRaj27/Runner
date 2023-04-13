@@ -18,5 +18,5 @@ jobs:
 
       - name: Compile and run Kotlin file
         run: |
-          kotlinc HelloWorld.kt -include-runtime -d HelloWorld.jar
-          java -jar HelloWorld.jar
+          kotlinc Main.kt -include-runtime -d Main.jar
+          java -jar Main.jar
