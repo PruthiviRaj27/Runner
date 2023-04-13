@@ -6,6 +6,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        app:
+          - 1
+          - 2
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
