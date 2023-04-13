@@ -1,10 +1,12 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
+import java.util.*
+import kotlin.time.Duration.Companion.minutes
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Sleep Start")
-    Thread.sleep(5000)
-    println("Sleep End")
-    println("Program arguments: ${args.joinToString()}")
+
+private val date get() = Calendar.getInstance().time.toString()
+fun main() {
+    println("Hello World!")
+    println("Start $date")
+    val duration = 5.minutes
+    Thread.sleep(duration.inWholeMilliseconds)
+    println("End $date")
 }
