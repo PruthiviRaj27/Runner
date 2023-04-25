@@ -41,6 +41,6 @@ jobs:
     steps:
       - name: Print build results
         run: |
-          jobs=($(echo ${{ needs.build2.outputs.matrix }} | jq -r '.app[]'))
+          jobs=($(echo "$MATRIX" | jq -r '.app[]'))
           num_jobs=${#jobs[@]}
           echo "Total jobs run: $num_jobs"
