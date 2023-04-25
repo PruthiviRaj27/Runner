@@ -29,13 +29,12 @@ jobs:
           java-version: 11
 
       - name: Compile and run Kotlin file
-        continue-on-error: true
         run: |
           kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
           java -jar Main.jar
 
       - name: The job has failed
-        if: ${{ failure() }}
+        if: ${{ always() && failure() }}
         run: echo "The job has failed"
 
   build3:
