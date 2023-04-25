@@ -34,13 +34,9 @@ jobs:
           java -jar Main.jar
         continue-on-error: true
 
-      - name: Save Stated
-        run: |
-          if [ $? -eq 0 ]; then
-            echo "completed" >> $GITHUB_OUTPUT
-          else
-            echo "failed" >> $GITHUB_OUTPUT
-          fi
+      - name: The job has failed
+        if: ${{ failure() }}
+        run: echo "The job has failed"
 
   build3:
     needs: build2
