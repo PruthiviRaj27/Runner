@@ -38,7 +38,7 @@ jobs:
     steps:
       - name: Print build results
         run: |
-          for job in "$(${{jobs.build}})"; do
+          for job in "$(${{build}})"; do
             status=${job.status}
             echo "Job $job Status: status"
           done
