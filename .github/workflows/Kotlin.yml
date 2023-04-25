@@ -30,10 +30,10 @@ jobs:
 
       - name: Compile and run Kotlin file
         run: |
-          status="${{ matrix.app }}"
-          echo "Job ${{ matrix.app }} status: $status"
           kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
           java -jar Main.jar
+        id: job-result
+        continue-on-error: true
 
       - name: Set status based on job result
         id: set-status
