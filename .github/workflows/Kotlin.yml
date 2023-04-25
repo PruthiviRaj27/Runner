@@ -1,7 +1,5 @@
 name: Kotlin CI
-
 on: [push]
-
 jobs:
   build1:
     runs-on: ubuntu-latest
