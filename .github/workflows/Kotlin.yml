@@ -51,7 +51,7 @@ jobs:
     steps:
       - name: Print build results
         run: |
-          success=$(jobs=($(echo "$MATRIX" | jq -r '.app[]')); echo "${#jobs[@]}")
-          failure=$(jobs=($(echo "$MATRIX" | jq -r 'select(. != "completed") | .[]')); echo "${#jobs[@]}")
+          success=$(echo "${{ needs.build2.outputs.status }}" | grep -o 'completed' | wc -l)
+          failure=$(echo "${{ needs.build2.outputs.status }}" | grep -o 'failed' | wc -l)
           echo "Total successful jobs: $success"
           echo "Total failed jobs: $failure"
