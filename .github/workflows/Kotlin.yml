@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - id: set-matrix
-        run: echo "matrix={\"app\":[{\"app\":\"Job 1\"},{\"app\":\"Job 2\"},{\"app\":\"Job 3\"},{\"app\":\"Job 4\"},{\"app\":\"Job 5\"}]}" >> $GITHUB_OUTPUT
+        run: echo "matrix={\"app\":[\"Job 1\",\"Job 2\",\"Job 3\",\"Job 4\",\"Job 5\"]}" >> $GITHUB_OUTPUT
 
   build2:
     needs: build1
