@@ -34,13 +34,10 @@ jobs:
           kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
           java -jar Main.jar
 
-#  print_results:
-#    needs: build
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Print build results
-#        run: |
-#          for job in "${{jobs.build}}"; do
-#            status=${job.status}
-#            echo "Job $job Status: $status"
-#          done
+  print_results:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print build results
+        run: |
+          echo "Total jobs run: ${{ matrix.max-parallel }}"
