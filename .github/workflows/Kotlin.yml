@@ -38,9 +38,7 @@ jobs:
     steps:
       - name: Print build results
         run: |
-          STEPS=$(echo '${{ toJson(needs.build.outputs)}}' | jq -r '.steps[]')
-          for step in $STEPS; do
-            name=$(echo $step | jq -r '.name')
-            outcome=$(echo $step | jq -r '.conclusion // .status')
-            echo "Step $name outcome: $outcome"
+          for job in ${{jobs.build}}; do
+            status=${job.status}
+            echo "Job $job Status: status"
           done
