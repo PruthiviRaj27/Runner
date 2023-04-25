@@ -40,4 +40,4 @@ jobs:
     steps:
       - name: Print build results
         run: |
-          echo "Total jobs run: ${{ matrix.max-parallel }}"
+          echo "Total jobs run: ${{ strategy.job-total }}"
