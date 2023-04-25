@@ -38,12 +38,7 @@ jobs:
     steps:
       - name: Print build results
         run: |
-          jobs=$(echo ${{ toJson(github.context.payload.workflow_run.jobs) }})
-          for job in $(echo "${jobs}" | jq -r '.[] | @base64'); do
-            _jq() {
-              echo ${job} | base64 --decode | jq -r ${1}
-            }
-            name=$(_jq '.name')
-            outcome=$(_jq '.conclusion // .status')
-            echo "Job $name outcome: $outcome"
+          for job in ${{needs.build}}; do
+            status=${job.status}
+            echo "Job $job Status: status"
           done
