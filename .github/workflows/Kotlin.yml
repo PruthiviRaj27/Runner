@@ -30,7 +30,7 @@ jobs:
 
       - name: Compile and run Kotlin file
         run: |
-          status="${{ github.job.result }}"
+          status="${{ jobs.matrix.app.status }}"
           echo "Job ${{ matrix.app }} status: $status"
           kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
           java -jar Main.jar
