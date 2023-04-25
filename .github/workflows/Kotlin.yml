@@ -38,6 +38,8 @@ jobs:
   build3:
     needs: build2
     runs-on: ubuntu-latest
+    env:
+      MATRIX: ${{ needs.build2.outputs.matrix }}
     steps:
       - name: Print build results
         run: |
