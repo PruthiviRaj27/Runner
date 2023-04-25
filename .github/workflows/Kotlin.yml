@@ -40,5 +40,5 @@ jobs:
         run: |
           for job in "${{jobs.build}}"; do
             status=${job.status}
-            echo "Job $job Status: status"
+            echo "Job $job Status: $status"
           done
