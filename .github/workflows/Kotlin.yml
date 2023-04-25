@@ -1,17 +1,45 @@
-name: build
-on: push
+name: Kotlin CI
+on: [push]
 jobs:
-  job1:
+  build1:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
+
     steps:
       - id: set-matrix
-        run: echo "matrix={\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}" >> $GITHUB_OUTPUT
-  job2:
-    needs: job1
+        run: echo "matrix={\"app\":[1,2,3,4,5]}"
+
+  build2:
+    needs: build1
     runs-on: ubuntu-latest
+    continue-on-error: true
+
     strategy:
-      matrix: ${{ fromJSON(needs.job1.outputs.matrix) }}
+      matrix: ${{ fromJSON(needs.build1.outputs.matrix) }}
+
     steps:
-      - run: build
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: "corretto"
+          java-version: 11
+
+      - name: Compile and run Kotlin file
+        run: |
+          status="${{ github.job.result }}"
+          echo "Job ${{ matrix.app }} status: $status"
+          kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
+          java -jar Main.jar
+
+  print_results:
+    needs: build2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print build results
+        run: |
+          job="${{needs.matrix.app}}"
+          echo "Total jobs run: $job.status"
