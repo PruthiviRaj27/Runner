@@ -38,8 +38,12 @@ jobs:
     steps:
       - name: Print build results
         run: |
-          for step in ${{ toJson(steps) }}; do
-            name=$(echo $step | jq -r '.name')
-            outcome=$(echo $step | jq -r '.conclusion // .status')
-            echo "Step $name outcome: $outcome"
+          jobs=$(echo ${{ toJson(github.context.payload.workflow_run.jobs) }})
+          for job in $(echo "${jobs}" | jq -r '.[] | @base64'); do
+            _jq() {
+              echo ${job} | base64 --decode | jq -r ${1}
+            }
+            name=$(_jq '.name')
+            outcome=$(_jq '.conclusion // .status')
+            echo "Job $name outcome: $outcome"
           done
