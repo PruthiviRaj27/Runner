@@ -38,9 +38,10 @@ jobs:
   build3:
     needs: build2
     runs-on: ubuntu-latest
-
     steps:
       - name: Print build results
         run: |
-          job="${{ matrix.app }}"
-          echo "Jobs name: $job"
+          success=$(jobs=($(echo "$MATRIX" | jq -r '.app[]')); echo "${#jobs[@]}")
+          failure=$(jobs=($(echo "$MATRIX" | jq -r 'select(. != "completed") | .[]')); echo "${#jobs[@]}")
+          echo "Total successful jobs: $success"
+          echo "Total failed jobs: $failure"
