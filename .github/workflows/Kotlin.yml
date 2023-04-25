@@ -38,11 +38,9 @@ jobs:
   build3:
     needs: build2
     runs-on: ubuntu-latest
-    env:
-      MATRIX: ${{ needs.build2.outputs.matrix }}
+
     steps:
       - name: Print build results
         run: |
-          jobs=($(echo "$MATRIX" | jq -r '.app[]'))
-          num_jobs=${#jobs[@]}
-          echo "Total jobs run: $num_jobs"
+          job="${{ matrix.app }}"
+          echo "Jobs name: $job"
