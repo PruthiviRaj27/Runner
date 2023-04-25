@@ -5,10 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
-      steps:
-        - id: set-matrix
-          run: |
-            echo "matrix={"1","2","3","4","5"}"
+
+    steps:
+      - id: set-matrix
+        run: echo "matrix={"1","2","3","4","5"}"
 
   build2:
     needs: build1
