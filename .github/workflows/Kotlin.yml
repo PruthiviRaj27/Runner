@@ -35,6 +35,16 @@ jobs:
           kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
           java -jar Main.jar
 
+      - name: Set status based on job result
+        id: set-status
+        if: steps.job-result.outcome == 'success'
+        run: echo "::set-output name=status::completed"
+      - run: echo "::set-output name=status::failed"
+        if: steps.job-result.outcome == 'failure'
+
+    outputs:
+      status: ${{ steps.set-status.outputs.status }}
+
   build3:
     needs: build2
     runs-on: ubuntu-latest
