@@ -32,12 +32,15 @@ jobs:
         run: |
           kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
           java -jar Main.jar
+        continue-on-error: true
+
+      - name: Save Stated
+        run: |
           if [ $? -eq 0 ]; then
             echo "completed" >> $GITHUB_OUTPUT
           else
             echo "failed" >> $GITHUB_OUTPUT
           fi
-        continue-on-error: true
 
   build3:
     needs: build2
