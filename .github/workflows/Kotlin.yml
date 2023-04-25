@@ -29,7 +29,7 @@ jobs:
 
       - name: Compile and run Kotlin file
         run: |
-          echo "${{build}}"
+          echo "${{jobs.build.status}}"
           kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
           java -jar Main.jar
 
