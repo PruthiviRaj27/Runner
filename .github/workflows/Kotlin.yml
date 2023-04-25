@@ -38,6 +38,6 @@ jobs:
     steps:
       - name: Print build results
         run: |
-          for job in ${{ job.steps.keys() }}; do
-            echo "Job $job status: ${{ jobs[job].outcome }}"
+          for job in ${{ jobs.build.steps.*.name }}; do
+            echo "Job $job status: ${{ jobs.build.steps[lookup(job, jobs.build.steps.*.name)].outcome }}"
           done
