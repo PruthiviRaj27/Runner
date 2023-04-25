@@ -3,8 +3,6 @@ on: [push]
 jobs:
   build1:
     runs-on: ubuntu-latest
-    env:
-      MATRIX: ${{ steps.set-matrix.outputs.matrix }}
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
