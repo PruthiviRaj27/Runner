@@ -11,11 +11,11 @@ jobs:
     strategy:
       matrix:
         app:
-          1: { name: "Job 1" }
-          2: { name: "Job 2" }
-          3: { name: "Job 3" }
-          4: { name: "Job 4" }
-          5: { name: "Job 5" }
+          - "Job 1"
+          - "Job 2"
+          - "Job 3"
+          - "Job 4"
+          - "Job 5"
 
     steps:
       - name: Checkout code
