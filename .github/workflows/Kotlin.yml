@@ -32,26 +32,19 @@ jobs:
         run: |
           kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
           java -jar Main.jar
-        id: job-result
-        continue-on-error: true
-
-      - name: Set status based on job result
-        id: set-status
-        if: steps.job-result.outcome == 'success'
-        run: echo "::set-output name=status::completed"
-      - run: echo "::set-output name=status::failed"
-        if: steps.job-result.outcome == 'failure'
-
-    outputs:
-      status: ${{ steps.set-status.outputs.status }}
+          if [ $? -eq 0 ]; then
+            echo "completed" >> $GITHUB_OUTPUT
+          else
+            echo "failed" >> $GITHUB_OUTPUT
+          fi
 
   build3:
     needs: build2
     runs-on: ubuntu-latest
     steps:
-      - name: Print build results
+      - name: Count successes and failures
         run: |
-          success=$(echo "${{ needs.build2.outputs.status }}" | grep -o 'completed' | wc -l)
-          failure=$(echo "${{ needs.build2.outputs.status }}" | grep -o 'failed' | wc -l)
+          success=$(grep -o 'completed' $GITHUB_OUTPUT | wc -l)
+          failure=$(grep -o 'failed' $GITHUB_OUTPUT | wc -l)
           echo "Total successful jobs: $success"
           echo "Total failed jobs: $failure"
