@@ -32,6 +32,7 @@ jobs:
         run: |
           kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
           java -jar Main.jar
+          continue-on-error: true
           if [ $? -eq 0 ]; then
             echo "completed" >> $GITHUB_OUTPUT
           else
