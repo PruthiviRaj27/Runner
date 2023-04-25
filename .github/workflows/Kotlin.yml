@@ -6,6 +6,7 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       steps:
+        - name: matrix-list
         - id: set-matrix
           run: echo "matrix={"1","2","3","4","5"}"
 
