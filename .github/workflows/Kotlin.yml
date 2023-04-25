@@ -30,7 +30,7 @@ jobs:
       - name: Compile and run Kotlin file
         run: |
           status="${{ job.status }}"
-          echo "Job ${{ job.id }} status: $status"
+          echo "Job ${{ job }} status: $status"
           kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
           java -jar Main.jar
 
