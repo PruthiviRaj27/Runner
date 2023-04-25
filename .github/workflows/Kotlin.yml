@@ -35,11 +35,11 @@ jobs:
           kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
           java -jar Main.jar
 
-  print_results:
+  build3:
     needs: build2
     runs-on: ubuntu-latest
     steps:
       - name: Print build results
         run: |
-          job="${{needs.matrix.app}}"
-          echo "Total jobs run: $job.status"
+          job="${{ needs.build2.outputs.matrix.app }}"
+          echo "Total jobs run: $job"
