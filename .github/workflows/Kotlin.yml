@@ -42,7 +42,7 @@ jobs:
           # Use ${{ matrix.job_name }} to access the current job name
 
       - name: The job has failed
-        run: if [[ ${{ job.status }} == 'failure' ]]; then
+        run: if [[ ${{ job.status }} == failure ]]; then
           echo ${{ matrix.job_name }} >> failure.txt
           else
           echo ${{ matrix.job_name }} >> success.txt
