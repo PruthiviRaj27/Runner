@@ -40,15 +40,13 @@ jobs:
           kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
           java -jar Main.jar
           # Use ${{ matrix.job_name }} to access the current job name
-          if [condition]; then
-            echo ${{ matrix.job_name }} >> success.txt
-          else
-            echo ${{ matrix.job_name }} >> failure.txt
-          fi
 
-#      - name: The job has failed
-#        if: ${{ always() && failure() }}
-#        run: echo "The job has failed"
+      - name: The job has failed
+        run: if [[ ${{ job.status }} == 'failure' ]]; then
+          echo ${{ matrix.job_name }} >> failure.txt
+          else
+          echo ${{ matrix.job_name }} >> success.txt
+          fi
 
   build3:
     needs: [build1, build2]
