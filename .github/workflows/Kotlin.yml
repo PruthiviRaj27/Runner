@@ -43,7 +43,7 @@ jobs:
     steps:
       - name: Count successes and failures
         run: |
-          success=$(grep -o 'completed' $GITHUB_OUTPUT | wc -l)
-          failure=$(grep -o 'failed' $GITHUB_OUTPUT | wc -l)
+          success=$(grep -o 'completed' $GITHUB_ENV | wc -l)
+          failure=$(grep -o 'failed' $GITHUB_ENV | wc -l)
           echo "Total successful jobs: $success"
           echo "Total failed jobs: $failure"
