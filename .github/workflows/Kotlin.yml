@@ -5,10 +5,17 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
+      success_array: ${{ steps.step1.outputs.success_array }}
+      failure_array: ${{ steps.step1.outputs.failure_array }}
 
     steps:
       - id: set-matrix
-        run: echo "matrix={\"app\":[\"Job 1\",\"Job 2\",\"Job 3\",\"Job 4\",\"Job 5\"]}" >> $GITHUB_OUTPUT
+        run: | 
+          echo "matrix={\"app\":[\"Job 1\",\"Job 2\",\"Job 3\",\"Job 4\",\"Job 5\"]}" >> $GITHUB_OUTPUT
+          success_array=("Success1" "Success2")
+          failure_array=("Failure1" "Failure2")
+          echo "::set-output name=success_array::${success_array[*]}"
+          echo "::set-output name=failure_array::${failure_array[*]}"
 
   build2:
     needs: build1
@@ -32,18 +39,24 @@ jobs:
         run: |
           kotlinc src/main/kotlin/Main.kt -include-runtime -d Main.jar
           java -jar Main.jar
+          # Use ${{ matrix.job_name }} to access the current job name
+          if [condition]; then
+            echo ${{ matrix.job_name }} >> success.txt
+          else
+            echo ${{ matrix.job_name }} >> failure.txt
+          fi
 
-      - name: The job has failed
-        if: ${{ always() && failure() }}
-        run: echo "The job has failed"
+#      - name: The job has failed
+#        if: ${{ always() && failure() }}
+#        run: echo "The job has failed"
 
   build3:
-    needs: build2
+    needs: [build1, build2]
     runs-on: ubuntu-latest
     steps:
       - name: Count successes and failures
         run: |
-          success=$(grep -o 'completed' $GITHUB_ENV | wc -l)
-          failure=$(grep -o 'failed' $GITHUB_ENV | wc -l)
-          echo "Total successful jobs: $success"
-          echo "Total failed jobs: $failure"
+          success_array=$(cat success.txt)
+          failure_array=$(cat failure.txt)
+          echo "Success Array: $success_array"
+          echo "Failure Array: $failure_array"
